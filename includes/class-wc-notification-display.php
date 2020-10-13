@@ -121,7 +121,14 @@ Class WoocommerceNotificationDisplaySetup {
                 )
             );
 
-        } else {
+        } elseif ( $pro == 'validate_page_type' ) {
+            
+            $page_type = array(
+                'product_page'      => 'Product Page',
+                'shop_page'         => 'Shop Page'
+            );
+
+        }else {
 
             $page_type  = array( 
                 'free'  => array(
@@ -143,7 +150,6 @@ Class WoocommerceNotificationDisplaySetup {
 
     public function list_of_templates( $pro = false ) {
 
-
         if( $pro == true ) {
             $templates = array(
                 'Select',
@@ -159,7 +165,6 @@ Class WoocommerceNotificationDisplaySetup {
                 'Template 2',
             );
         }
-        
 
         return $templates;
 

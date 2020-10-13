@@ -207,7 +207,7 @@
                         parentTrchildTd     = parentTr.find('td');
 
                     var data        = {
-                            'action'        :   'delete_single_row_message',
+                            'action'        :   'delete_single_row_message_wcnd',
                             'messageID'     :   getMsgId,
                             'nonce'         :   wcnd_ajax_object.nonce
                     };
@@ -284,7 +284,7 @@
                     var getMsgId    = $(this).attr('data-wcnd-id');
 
                     var data = {
-                        'action'    : 'get_row_message',
+                        'action'    : 'get_row_message_wcnd',
                         'nonce'     : wcnd_ajax_object.nonce,
                         'messageID' : getMsgId  
                     };
@@ -312,6 +312,12 @@
                             }
 
                         },
+                        complete : function ( result ) {
+                            
+                            parentTrchildTd.addClass('removeClass');
+                            parentTr.removeClass('active-edit-stat');
+                                
+                        }
 
                     });
 
@@ -333,8 +339,9 @@
                             messageID           = $(this).attr('data-edit-id');
                             
                             var data = {};
-                            var data = {
-                                'action'            : 'update_row_message',
+                            
+                            data = {
+                                'action'            : 'update_row_message_wcnd',
                                 'message_type'      : messageType,
                                 'page_display'      : whereToDisplay,
                                 'template_id'       : templateId,

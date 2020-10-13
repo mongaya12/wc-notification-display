@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * 
- * Woocommerce Notification Display Create Tables
+ * Woocommerce Notification Display Create Tables and Queries
  * 
  */
 Class WoocommerceNotificationDisplayDatabase {
@@ -66,7 +66,6 @@ Class WoocommerceNotificationDisplayDatabase {
     public function initialize() {
 
         $this->create_tables();
-        $this->setup_ajax_handlers();
 
     }
 
@@ -95,54 +94,12 @@ Class WoocommerceNotificationDisplayDatabase {
 
     }
 
-    public function setup_ajax_handlers() {
+    public function save_message_data( $data ) {
 
-        add_action( 'wp_ajax_delete_single_row_message', array( $this, 'delete_row_message' ) );
-
-        add_action( 'wp_ajax_get_row_message', array( $this, 'get_one_message' ) );
-
-        add_action( 'wp_ajax_update_row_message', array( $this, 'update_row_message' ) );
-
-        add_action( 'wp_ajax_save_notification_wcnd', array( $this, 'save_message_data' ) );
-
-    } 
-
-    public function is_valid_value( $val, $ver = false ) {
-
-        // version default free = false
-        if( $ver == false ) {
-
-        }
-
-    }
-
-    public function save_message_data( ) {
-
+        if( ! $data )
+            return;
+        
         global $wpdb;
-
-        $msg_type       = (int) $_POST['message_type'];
-        $page_display   = sanitize_text_field( $_POST['page_display'] );
-        $template_id    = (int) $_POST['template_id'];
-        $start_date     = sanitize_text_field( $_POST['start_date'] );
-        $end_date       = sanitize_text_field( $_POST['end_date'] );
-        $msg_box        = sanitize_textarea_field( $_POST['message_box'] );
-        $btn_text       = sanitize_text_field( $_POST['button_text'] );
-        $btn_url        = sanitize_text_field( $_POST['button_url'] );
-        $nonce          = $_POST['nonce'];
-
-        $data = array(
-            'msg_type'          => $msg_type,
-            'page_display'      => $page_display,
-            'template_id'       => $template_id,
-            'start_date'        => $start_date,
-            'end_date'          => $end_date,
-            'msg_box'           => $msg_box,
-            'btn_text'          => $btn_text,
-            'btn_url'           => $btn_url
-        );
-
-        if( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) )
-            die('Busted!');
 
         $table_name     = $wpdb->prefix . $this->db_tb_messages;    
 
@@ -159,11 +116,7 @@ Class WoocommerceNotificationDisplayDatabase {
             ) 
         );
 
-        wp_send_json_success(
-            wp_json_encode( $savemsg )
-        );
-
-        die();
+        return $savemsg;
 
     }
 
@@ -179,97 +132,32 @@ Class WoocommerceNotificationDisplayDatabase {
 
     }
 
-    public function delete_row_message() {
+    public function delete_row_message( $id ) {
 
         global $wpdb;
         
-        $nonce  = $_POST['nonce'];
-        $id     = (int) $_POST['messageID'];
-
-        if( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) )
-            die('Busted!');
-
         $delete_msg = $wpdb->delete( $this->table_name, array( 'id' => $id ) );
 
-        wp_send_json_success(
-            wp_json_encode( $delete_msg )
-        );
-
-        die();
+        return $delete_msg;
 
     }
 
-    public function get_one_message() {
+    public function get_message_details( $id ) {
 
         global $wpdb;
-
-        $nonce  = $_POST['nonce'];
-        $id     = (int) $_POST['messageID'];
-
-        if( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) )
-            die('Busted!');
 
         $message = $wpdb->get_results( 
         $wpdb->prepare("SELECT * FROM {$this->table_name} WHERE id={$id}") 
             );
         
-        $castArr        = $message;
-        $html_output    = array();
-
-        if( empty( $castArr ) ) {
-            $html_output['error'] = true;
-
-            wp_send_json_success( 
-                $html_output
-            );
-
-            die();
-        }
-        
-        ob_start();
-        include WCND_DIR__PATH . 'includes/admin/views/html-wcnd-edit-msg.php';
-        $content = ob_get_clean();
-        
-        $html_output['content'] = $content;
-        $html_output['error']   = false;
-
-        wp_send_json_success( 
-            $html_output
-        );
-        
-        die();
+        return $message;
 
     }
 
 
-    public function update_row_message() {
+    public function update_row_message( $data ) {
 
         global $wpdb;
-
-        $msg_type       = (int) $_POST['message_type'];
-        $page_display   = sanitize_text_field( $_POST['page_display'] );
-        $template_id    = (int) $_POST['template_id'];
-        $start_date     = sanitize_text_field( $_POST['start_date'] );
-        $end_date       = sanitize_text_field( $_POST['end_date'] );
-        $msg_box        = sanitize_textarea_field( $_POST['message_box'] );
-        $btn_text       = sanitize_text_field( $_POST['button_text'] );
-        $btn_url        = sanitize_text_field( $_POST['button_url'] );
-        $msgId          = (int) $_POST['messageId'];
-        $nonce          = $_POST['nonce'];
-
-        $data = array(
-            'msg_type'          => $msg_type,
-            'page_display'      => $page_display,
-            'template_id'       => $template_id,
-            'start_date'        => $start_date,
-            'end_date'          => $end_date,
-            'msg_box'           => $msg_box,
-            'btn_text'          => $btn_text,
-            'btn_url'           => $btn_url
-        );
-
-        if( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) )
-            die('Busted!');
 
         $update_msg = $wpdb->update( $this->table_name, 
         array( 
@@ -282,13 +170,9 @@ Class WoocommerceNotificationDisplayDatabase {
             'btnText'           => $data['btn_text'],
             'btnUrl'            => $data['btn_url'],
             'updated_at'        => current_time('G'),
-        ), array('id' => $msgId) );
+        ), array('id' => $data['messageID']) );
         
-        wp_send_json_success(
-            wp_json_encode( $update_msg )
-        );
-
-        die();
+        return $update_msg;
 
     }
 
