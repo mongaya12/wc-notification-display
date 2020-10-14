@@ -155,7 +155,7 @@ Class WoocommerceNotificationDisplayDatabase {
     }
 
 
-    public function update_row_message( $data ) {
+    public function update_row_message( $data = array() ) {
 
         global $wpdb;
 
@@ -169,9 +169,9 @@ Class WoocommerceNotificationDisplayDatabase {
             'endDate'           => $data['end_date'],
             'btnText'           => $data['btn_text'],
             'btnUrl'            => $data['btn_url'],
-            'updated_at'        => current_time('G'),
+            'updated_at'        => current_time('mysql'),
         ), array('id' => $data['messageID']) );
-        
+
         return $update_msg;
 
     }

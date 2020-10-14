@@ -72,7 +72,6 @@ Class WoocommerceNotificationDisplayValidateAjaxCall {
         if( ! wp_verify_nonce( $nonce, 'ajax-nonce' ) )
             die('Busted!');
         
-
         if( in_array( wcnd_template_number($template_id), WNDS()->list_of_templates() ) ) {
     
             $valid_template_id = $template_id;
@@ -83,7 +82,7 @@ Class WoocommerceNotificationDisplayValidateAjaxCall {
         
         }
 
-        if( in_array( $page_display, WNDS()->list_of_page_types('validate_page_type') ) ) {
+        if( in_array( $page_display, WNDS()->list_of_page_types( false, 'validate_page_type') ) ) {
 
             $valid_page_display = $page_display;
 
@@ -175,7 +174,7 @@ Class WoocommerceNotificationDisplayValidateAjaxCall {
         
         }
 
-        if( in_array( $page_display, WNDS()->list_of_page_types('validate_page_type') ) ) {
+        if( in_array( $page_display, WNDS()->list_of_page_types( false, 'validate_page_type') ) ) {
 
             $valid_page_display = $page_display;
 

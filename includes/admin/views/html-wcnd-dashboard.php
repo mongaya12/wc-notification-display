@@ -116,7 +116,106 @@ $notification_msg = WNDD();
                </table>
             </div>
             <div id="templates-list" class="wcnd-hide templates-list-wrapper">
-                        kjasdfklasdklfaklsdflkasdfkjl
+                <div class="left-flank-template">
+                        
+                    <ul>
+                        
+                        <?php 
+                        
+                            $template_list = WNDS()->list_of_templates(true);
+                            
+                            $ctr = 0;
+
+                            foreach( $template_list as $key => $val ) {
+                                if( $ctr !== 0 ){
+                        ?>
+                                    <li class="wcnd-hide template_is_visible">
+                                        <div class="title__template">
+                                            <?php echo esc_html( $val ); ?> <i class="fas fa-caret-down"></i>
+                                            <?php 
+                                                if( $ctr !== 1 ) {
+                                                    printf( '<div class="%1$s">%2$s</div>', esc_attr( 'pro-version-class' ), esc_html( 'Pro Version!' ) );
+                                                }
+                                            ?>
+                                        </div>
+                                        <?php 
+                                            if( $ctr == 1 ) {
+                                        ?>
+                                                <div class="template__content" id="template_design_<?php echo esc_html($ctr); ?>">
+                                                    <div class="cssfields-group">
+                                                        <label for="fontsize">
+                                                            <?php esc_html_e( 'Font Size', 'wc-notification-display' ); ?>
+                                                        </label>
+                                                        <input type="number" name="fontsize" class="css-style-fields" value="">
+                                                    </div>
+                                                    <div class="cssfields-group">
+                                                        <label for="fontsize">
+                                                            <?php esc_html_e( 'Font Color', 'wc-notification-display' ); ?>
+                                                        </label>
+                                                        <input type="number" name="fontsize" class="css-style-fields" value="">
+                                                    </div>
+                                                    <div class="cssfields-group">
+                                                        <label for="fontsize">
+                                                            <?php esc_html_e( 'Border', 'wc-notification-display' ); ?>
+                                                        </label>
+                                                        <input type="number" name="fontsize" class="css-style-fields" value="">
+                                                    </div>
+                                                    <div class="cssfields-group">
+                                                        <label for="fontsize">
+                                                            <?php esc_html_e( 'Border Color', 'wc-notification-display' ); ?>
+                                                        </label>
+                                                        <input type="text" name="fontsize" class="css-style-fields" value="">
+                                                    </div>
+                                                    <div class="cssfields-group">
+                                                        <label for="fontsize">
+                                                            <?php esc_html_e( 'Background Color', 'wc-notification-display' ); ?>
+                                                        </label>
+                                                        <input type="text" name="fontsize" class="css-style-fields" value="">
+                                                    </div>
+                                                    
+                                                </div>
+                                        <?php
+                                            }
+                                        ?>
+                                    </li>
+                        <?php
+                                }
+                            $ctr++;
+                            }
+                        ?>
+                    </ul>
+
+                </div>
+                <div class="right-flank-display">
+                    <div class="wrapper_box_styling_template">
+                        <span class="note-wcnds">Font Family will vary on your themes.</span>
+                        <div class="template_1_the_style standardbox_wcnd" >
+                            <div class="start_styling">
+                                <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now</a></p>
+                            </div>
+                        </div>
+                        <div class="template_2_the_style standardbox_wcnd">
+                            <div class="start_styling">
+                                <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now</a></p>
+                            </div>
+                        </div>
+                        <div class="template_3_the_style standardbox_wcnd">
+                            <div class="start_styling">
+                                <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now!</a></p>
+                            </div>
+                        </div>
+                        <div class="template_4_the_style standardbox_wcnd">
+                            <div class="start_styling">
+                            <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now!</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="save__template_styling">
+                    <a href="#" id="save_style_settings">
+                        Save Settings
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -57,7 +57,7 @@ function wcnd_template_number( $number ) {
     if( ! $number ) 
         return;
 
-    switch ($type) {
+    switch ($number) {
 
         case "0":
             return 'Select';

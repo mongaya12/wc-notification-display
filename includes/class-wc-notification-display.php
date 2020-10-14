@@ -108,7 +108,7 @@ Class WoocommerceNotificationDisplaySetup {
         
     }
 
-    public function list_of_page_types( $pro = false ) {
+    public function list_of_page_types( $pro = false, $checker = '') {
 
         if( $pro == true ) {
 
@@ -121,11 +121,11 @@ Class WoocommerceNotificationDisplaySetup {
                 )
             );
 
-        } elseif ( $pro == 'validate_page_type' ) {
-            
+        } else if ( $checker == 'validate_page_type' ) {
+            // ONLY FOR FREE VERSION
             $page_type = array(
-                'product_page'      => 'Product Page',
-                'shop_page'         => 'Shop Page'
+                'product_page',
+                'shop_page'
             );
 
         }else {
@@ -162,7 +162,6 @@ Class WoocommerceNotificationDisplaySetup {
             $templates = array(
                 'Select',
                 'Template 1',
-                'Template 2',
             );
         }
 

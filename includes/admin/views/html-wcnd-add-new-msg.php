@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     foreach( $val as $subkey => $subval ) { 
                                 ?>
                                     <input type="radio" id="pick_<?php echo esc_html( $subkey ); ?>" name="wcnd_page_type" class="wcnd_page_type" value="<?php echo esc_html( $subkey ); ?>" <?php echo ( $version == 'free' ? '' : 'disabled'); ?> >
-                                        <label for="pick_<?php echo esc_html( $subkey ); ?>"> <?php echo esc_html( $subval ); ?></label><br>
+                                        <label for="pick_<?php echo esc_html( $subkey ); ?>"> <?php echo esc_html( $subval ); ?> <?php echo ( $version == 'free' ? '' : '<span class="pro-version-radio"> '. esc_html('(Pro Version!)') .' </span>'); ?> </label><br>
                                 <?php 
                                     }
                                 ?>
