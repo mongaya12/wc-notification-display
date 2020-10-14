@@ -35,6 +35,7 @@ if ( ! in_array(
 
 require_once WCND_DIR__PATH . 'includes/class-wcnd-database.php';
 require_once WCND_DIR__PATH . 'includes/class-validate-messages.php';
+require_once WCND_DIR__PATH . 'includes/class-display-template-message.php';
 require_once WCND_DIR__PATH . 'includes/class-wc-notification-display.php';
 
 //GLOBAL - CHECK STATUS IF WOOCMMERCE IS INSTALLED RETURN BOOLEAN;

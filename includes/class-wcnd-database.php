@@ -154,6 +154,18 @@ Class WoocommerceNotificationDisplayDatabase {
 
     }
 
+    public function get_start_date( $current_date) {
+
+        global $wpdb;
+        
+        $date = $wpdb->get_results(
+        $wpdb->prepare( "SELECT * FROM {$this->table_name} WHERE startDate >='{$current_date}' AND endDate >= '{$current_date}' ORDER BY startDate ASC")
+        );
+
+        return $date;
+
+    }
+
 
     public function update_row_message( $data = array() ) {
 

@@ -146,31 +146,31 @@ $notification_msg = WNDD();
                                                         <label for="fontsize">
                                                             <?php esc_html_e( 'Font Size', 'wc-notification-display' ); ?>
                                                         </label>
-                                                        <input type="number" name="fontsize" class="css-style-fields" value="">
+                                                        <input type="number" name="fontsize" class="css-style-fields" value="" disabled>
                                                     </div>
                                                     <div class="cssfields-group">
                                                         <label for="fontsize">
                                                             <?php esc_html_e( 'Font Color', 'wc-notification-display' ); ?>
                                                         </label>
-                                                        <input type="number" name="fontsize" class="css-style-fields" value="">
+                                                        <input type="number" name="fontsize" class="css-style-fields" value="" disabled>
                                                     </div>
                                                     <div class="cssfields-group">
                                                         <label for="fontsize">
                                                             <?php esc_html_e( 'Border', 'wc-notification-display' ); ?>
                                                         </label>
-                                                        <input type="number" name="fontsize" class="css-style-fields" value="">
+                                                        <input type="number" name="fontsize" class="css-style-fields" value="" disabled>
                                                     </div>
                                                     <div class="cssfields-group">
                                                         <label for="fontsize">
                                                             <?php esc_html_e( 'Border Color', 'wc-notification-display' ); ?>
                                                         </label>
-                                                        <input type="text" name="fontsize" class="css-style-fields" value="">
+                                                        <input type="text" name="fontsize" class="css-style-fields" value="" disabled>
                                                     </div>
                                                     <div class="cssfields-group">
                                                         <label for="fontsize">
                                                             <?php esc_html_e( 'Background Color', 'wc-notification-display' ); ?>
                                                         </label>
-                                                        <input type="text" name="fontsize" class="css-style-fields" value="">
+                                                        <input type="text" name="fontsize" class="css-style-fields" value="" disabled>
                                                     </div>
                                                     
                                                 </div>
@@ -188,32 +188,37 @@ $notification_msg = WNDD();
                 </div>
                 <div class="right-flank-display">
                     <div class="wrapper_box_styling_template">
-                        <span class="note-wcnds">Font Family will vary on your themes.</span>
+                        <span class="note-wcnds"><?php esc_html_e( 'Font Family will vary on your themes.', 'wc-notification-display' ); ?></span>
                         <div class="template_1_the_style standardbox_wcnd" >
                             <div class="start_styling">
-                                <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now</a></p>
+                                <p><?php esc_html_e( 'Free Delivery for Orders of at least $30.', 'wc-notification-display' ); ?> <a href="#"><?php esc_html_e( 'Shop Now', 'wc-notification-display' ); ?></a></p>
                             </div>
                         </div>
                         <div class="template_2_the_style standardbox_wcnd">
                             <div class="start_styling">
-                                <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now</a></p>
+                                <div class="icon-background-wcnd">
+                                <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="p-content-wcnd">
+                                <p><?php esc_html_e( 'Order within this week and get free delivery at checkout!', 'wc-notification-display' ); ?></p>
+                                </div>
                             </div>
                         </div>
                         <div class="template_3_the_style standardbox_wcnd">
                             <div class="start_styling">
-                                <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now!</a></p>
-                            </div>
-                        </div>
-                        <div class="template_4_the_style standardbox_wcnd">
-                            <div class="start_styling">
-                            <p>Free Delivery for Orders of at least $30. <a href="#">Shop Now!</a></p>
+                                <div class="icon-background-wcnd">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                                <div class="p-content-wcnd">
+                                <p><?php esc_html_e( 'WCND Special Sale - 50% OFF!', 'wc-notification-display' ); ?> <a href="#"><?php esc_html_e( 'Shop Now', 'wc-notification-display' ); ?></a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="save__template_styling">
                     <a href="#" id="save_style_settings">
-                        Save Settings
+                        <?php esc_html_e( 'Save Settings', 'wc-notification-display'); ?>
                     </a>
                 </div>
             </div>

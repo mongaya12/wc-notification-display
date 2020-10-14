@@ -156,7 +156,6 @@ Class WoocommerceNotificationDisplaySetup {
                 'Template 1',
                 'Template 2',
                 'Template 3',
-                'Template 4'
             );
         } else {
             $templates = array(
