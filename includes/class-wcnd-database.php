@@ -92,6 +92,19 @@ Class WoocommerceNotificationDisplayDatabase {
 
         dbDelta( $sql );
 
+        $table_template = $this->table_prefix . 'wcnd_templates';
+
+        $sql_2 = "CREATE TABLE IF NOT EXISTS $table_template (
+            id int(10) unsigned NOT NULL AUTO_INCREMENT,
+            templateID int(10) NOT NULL,
+            customCSS varchar(500) NOT NULL,
+            created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at timestamp NOT NULL,
+            PRIMARY KEY  (id)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+    
+        dbDelta( $sql_2 );
+
     }
 
     public function save_message_data( $data ) {

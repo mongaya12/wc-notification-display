@@ -21,6 +21,14 @@ defined( 'ABSPATH' ) || exit;
 
 Class WoocommerceNotificationDisplayMessageTemplate {
 
+    /**
+     * 
+     * Return Messages Array of Objects 
+     * 
+     */
+    public static $wcnd_msg;
+
+
     public function __construct() {
 
         $this->initialize();
@@ -30,7 +38,15 @@ Class WoocommerceNotificationDisplayMessageTemplate {
     public function initialize() {
 
         add_action( 'wp_enqueue_scripts', array( $this, 'scripts_styles_frontend' ) );
-        add_action( 'wp_loaded', array( $this, 'template_html' ) );
+        add_action( 'init', array( $this, 'template_html' ) );
+        add_action( 'wp_loaded', array( $this, 'wc_hook_action' ) );
+
+    }
+
+    public function wc_hook_action() {
+
+        add_action('woocommerce_before_main_content', array( $this, 'display_wc_template_msg_shop_page' ) );
+        add_action('woocommerce_before_main_content', array( $this, 'display_wc_template_msg_product_page' ) );
 
     }
 
@@ -38,6 +54,67 @@ Class WoocommerceNotificationDisplayMessageTemplate {
 
         wp_enqueue_style( 'wcnd-fontawesome-icons' , WCND_URL__PATH . 'assets/libs/fontawesome/css/all.css',  array(), false );
         wp_enqueue_style( 'wcnd-front-end' , WCND_URL__PATH . 'assets/css/wcnd-front-end-template.css',  array(), false );
+
+    }
+
+    public function display_wc_template_msg_shop_page() {
+
+        $data_msg = $this->wcnd_msg;
+
+        if( is_shop() && $data_msg ) {
+
+            $this->process_template_page_type_display( $data_msg );
+
+        }
+
+    }
+
+    public function display_wc_template_msg_product_page() {
+
+        $data_msg = $this->wcnd_msg;
+
+        if( is_product() && $data_msg ) {
+
+            $this->process_template_page_type_display( $data_msg );
+
+        }
+
+    }
+
+    public function process_template_page_type_display( $data_msg ) {
+        
+        if( empty( $data_msg ) )
+            return false;
+
+        foreach( $data_msg as $data ) {
+                
+            if( $data['page_type'] === 'product_page' && is_product() ) {
+
+                if( in_array( $data['templateID'], WNDS()->list_of_templates() ) ) {
+
+                    include $this->get_template_html_by_id($data['templateID']); 
+
+                }else{
+
+                    include $this->get_template_html_by_id(1);
+
+                }
+
+            } else if ( $data['page_type'] === 'shop_page' && is_shop() ) {
+                
+                if( in_array( $data['templateID'], WNDS()->list_of_templates() ) ) {
+
+                    include $this->get_template_html_by_id($data['templateID']); 
+
+                }else{
+
+                    include $this->get_template_html_by_id(1);
+
+                }
+
+            }
+
+        }
 
     }
 
@@ -61,75 +138,30 @@ Class WoocommerceNotificationDisplayMessageTemplate {
 
     }
 
-    public function hook_product_page_wc( $data = array() ) {
-        
-        if( ! $data )
-            return;
-
-        ob_start();
-        include $this->get_template_html_by_id( $data['templateID'] );
-        $content = ob_get_clean();
-        echo $content;
-        
-    }
-
-    public function hook_shop_page_wc( $data = array() ) {
-
-        if( ! $data )
-            return;
-
-        ob_start();
-        include $this->get_template_html_by_id( $data['templateID'] );
-        $content = ob_get_clean();
-        echo $content;
-    }
-
-    public function hook_template_to_wc( $data = array() ) {
-
-
-        if( $data['page_type'] == 'product_page'   ) {
-
-            add_action( 'woocommerce_before_main_content' , array( $this, 'hook_product_page_wc' ),10 );
-            $this->hook_product_page_wc($data);
-
-        }
-
-        if( $data['page_type'] == 'shop_page'  ) {
-
-            add_action( 'woocommerce_before_main_content' , array( $this, 'hook_shop_page_wc' ),10 );
-            $this->hook_shop_page_wc($data);
-
-        }
-        
-
-    }
-
     public function template_html() {
 
         $msg_data = $this->start_end_date();
 
         if( $msg_data ) {
 
+            $arr_msg = array();
+            $ctr     = 0;
             foreach( $msg_data as $data ) {
 
-                if( $data->templateID == 1 ) {
+                $arr_msg = array(
+                    'page_type'     => $data->pageType,
+                    'templateID'    => $data->templateID,
+                    'btnText'       => $data->btnText,
+                    'btnUrl'        => $data->btnUrl,
+                    'message'       => $data->messages
+                );
 
-                    $arr_msg = array(
-                        'page_type'     => $data->pageType,
-                        'templateID'    => $data->templateID,
-                        'btnText'       => $data->btnText,
-                        'btnUrl'        => $data->btnUrl,
-                        'message'       => $data->messages
-                    );
-
-                    $this->hook_template_to_wc( $arr_msg );
-
-                }
-
+                $this->wcnd_msg[$ctr] = $arr_msg;
+                $ctr++;
             }
 
         }
-
+        
     }
 
     private function start_end_date() {

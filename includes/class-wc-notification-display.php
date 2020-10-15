@@ -85,11 +85,14 @@ Class WoocommerceNotificationDisplaySetup {
             wp_enqueue_style( 'wcnd-fontawesome-icons' , WCND_URL__PATH . 'assets/libs/fontawesome/css/all.css',  array(), false );
             wp_enqueue_style( 'wcnd-admin-dashboard' , WCND_URL__PATH . 'assets/css/wcnd-admin-dashboard.css',  array(), false );
     
+            wp_enqueue_style( 'wp-color-picker' );
             wp_enqueue_style('jquery-ui');
-    
+
             wp_enqueue_script('jquery-ui-datepicker');
-    
+            
+            wp_enqueue_script( 'wcnd-admin-template' , WCND_URL__PATH . 'assets/js/wcnd-admin-template.js',  array('wp-color-picker'), false, true);
             wp_enqueue_script( 'wcnd-admin-scripts' , WCND_URL__PATH . 'assets/js/wcnd-admin-scripts.js',  array(), false, true);
+            wp_localize_script( 'wcnd-admin-template', 'wcnd_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce('ajax-nonce') ) );
             wp_localize_script( 'wcnd-admin-scripts', 'wcnd_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce('ajax-nonce') ) );
         }
 

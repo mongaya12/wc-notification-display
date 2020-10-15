@@ -1,0 +1,17 @@
+.wcnd-box-template.wcnd-template-1 {
+    background: #183153;
+    color: #fff;
+    padding: 5px 15px 5px 15px;
+    clear: both;
+    margin-bottom: 15px;
+}
+
+.wcnd_anchor_template{
+    float: right;
+    background: #fff;
+    padding: 0px 10px;
+    color: #183153;
+    outline: none;
+    text-decoration: none;
+    border-radius: 5px;
+}
