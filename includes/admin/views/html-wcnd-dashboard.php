@@ -122,8 +122,9 @@ $notification_msg = WNDD();
                         
                         <?php 
                         
-                            $template_list = WNDS()->list_of_templates(true);
-                            
+                            $template_list      = WNDS()->list_of_templates(true);
+                            $template_1_style   = WNDD()->get_template_styles(); 
+                            $css_template_1     = maybe_unserialize( $template_1_style[0]->customCSS );
                             $ctr = 0;
 
                             foreach( $template_list as $key => $val ) {
@@ -146,13 +147,14 @@ $notification_msg = WNDD();
                                                         <label for="">
                                                             <?php esc_html_e( 'Font Size', 'wc-notification-display' ); ?>
                                                         </label>
-                                                        <input type="number" name="" class="css-style-fields wcndcontent_dynamic_data" value="" >
+                                                        <input type="number" name="" class="css-style-fields wcndcontent_dynamic_data" value="<?php echo esc_html($css_template_1['font_size']); ?>" >
                                                     </div>
                                                     <div class="cssfields-group">
                                                         <div class="font-color-wrapper">
                                                             <label for="">
                                                                 <?php esc_html_e( 'Font Color', 'wc-notification-display' ); ?>
                                                             </label>
+                                                            <input type="hidden" id="fontcolor-hidden-value" class="wcnd-hide" value="<?php echo esc_html($css_template_1['font_color']); ?>" >
                                                             <input type="text" name="" class="css-style-fields wcnd_color_picker" value="" >
                                                         </div>
                                                     </div>
@@ -161,6 +163,7 @@ $notification_msg = WNDD();
                                                             <label for="">
                                                                 <?php esc_html_e( 'Background Color', 'wc-notification-display' ); ?>
                                                             </label>
+                                                            <input type="hidden" id="bgcolor-hidden-value" class="wcnd-hide" value="<?php echo esc_html($css_template_1['bg_color']); ?>" >
                                                             <input type="text" name="" class="css-style-fields wcnd_color_picker" value="" >
                                                         </div>
                                                     </div>
@@ -169,6 +172,7 @@ $notification_msg = WNDD();
                                                             <label for="">
                                                                 <?php esc_html_e( 'Button Background', 'wc-notification-display' ); ?>
                                                             </label>
+                                                            <input type="hidden" id="btnbgcolor-hidden-value" class="wcnd-hide" value="<?php echo esc_html($css_template_1['btn_bgcolor']); ?>" >
                                                             <input type="text" name="" class="css-style-fields wcnd_color_picker" value="" >
                                                         </div>
                                                     </div>
@@ -219,6 +223,13 @@ $notification_msg = WNDD();
                     <a href="#" id="save_style_settings" class="btn-save">
                         <?php esc_html_e( 'Save Settings', 'wc-notification-display'); ?>
                     </a>
+                    <div class="loader-icon hide-ncwd">
+                        <div class="lds-ellipsis">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

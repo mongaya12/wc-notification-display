@@ -57,6 +57,26 @@ Class WoocommerceNotificationDisplayMessageTemplate {
 
     }
 
+    public function get_initial_styles_template() {
+
+        $template_style = WNDD()->get_template_styles();
+        $tmp_arr        = array();
+
+        if( $template_style ) {
+            
+            $ctr = 0;
+            foreach ( $template_style as $style ) {
+                $tmp_arr['templateID']    = $style->templateID;
+                $tmp_arr['customCSS']     = maybe_unserialize( $style->customCSS );
+            $ctr++;
+            }
+            
+            return $tmp_arr;
+
+        }
+
+    }
+
     public function display_wc_template_msg_shop_page() {
 
         $data_msg = $this->wcnd_msg;
@@ -83,14 +103,16 @@ Class WoocommerceNotificationDisplayMessageTemplate {
 
     public function process_template_page_type_display( $data_msg ) {
         
-        if( empty( $data_msg ) )
+        if( empty( $data_msg ) || $data_msg == 'Empty' )
             return false;
+
+        $template_styles = $this->get_initial_styles_template();
 
         foreach( $data_msg as $data ) {
                 
             if( $data['page_type'] === 'product_page' && is_product() ) {
 
-                if( in_array( $data['templateID'], WNDS()->list_of_templates() ) ) {
+                if( in_array( wcnd_template_number($data['templateID']), WNDS()->list_of_templates() ) ) {
 
                     include $this->get_template_html_by_id($data['templateID']); 
 
@@ -102,7 +124,7 @@ Class WoocommerceNotificationDisplayMessageTemplate {
 
             } else if ( $data['page_type'] === 'shop_page' && is_shop() ) {
                 
-                if( in_array( $data['templateID'], WNDS()->list_of_templates() ) ) {
+                if( in_array( wcnd_template_number($data['templateID']), WNDS()->list_of_templates() ) ) {
 
                     include $this->get_template_html_by_id($data['templateID']); 
 
@@ -112,7 +134,7 @@ Class WoocommerceNotificationDisplayMessageTemplate {
 
                 }
 
-            }
+            } 
 
         }
 
@@ -142,10 +164,11 @@ Class WoocommerceNotificationDisplayMessageTemplate {
 
         $msg_data = $this->start_end_date();
 
-        if( $msg_data ) {
+        if( $msg_data && $msg_data !== 'Empty' ) {
 
             $arr_msg = array();
             $ctr     = 0;
+
             foreach( $msg_data as $data ) {
 
                 $arr_msg = array(
@@ -161,7 +184,7 @@ Class WoocommerceNotificationDisplayMessageTemplate {
             }
 
         }
-        
+
     }
 
     private function start_end_date() {

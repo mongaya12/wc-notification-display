@@ -357,6 +357,13 @@ li.wcnd-hide.template_is_visible {
     width: 100%;
     margin-top: 15px;
     margin-bottom: 25px;
+    position:relative;
+}
+
+.save__template_styling .loader-icon {
+    position: absolute;
+    right: 25px;
+    bottom: -40px;
 }
 
 .left-flank-template ul li .title__template {

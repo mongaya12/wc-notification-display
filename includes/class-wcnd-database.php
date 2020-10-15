@@ -133,6 +133,54 @@ Class WoocommerceNotificationDisplayDatabase {
 
     }
 
+    public function save_template_settings( $template_id, $data ) {
+
+        global $wpdb;
+
+        $table_template = $this->table_prefix . 'wcnd_templates';
+
+        $template = $wpdb->get_results( 
+        $wpdb->prepare("SELECT *  FROM {$table_template} WHERE templateID = '{$template_id}' ") 
+         );
+
+        if( empty( $template ) ) {
+
+            $template = $wpdb->insert( $table_template, 
+            array( 
+                'customCSS'        => $data,
+                'templateID'       => $template_id
+                ) 
+            );
+
+        } else {
+
+            $template = $wpdb->update( $table_template, 
+            array( 
+                'customCSS'        => $data, 
+                'templateID'       => $template_id,
+                'updated_at'        => current_time('mysql'),
+            ), array('templateID' => $template_id ) );
+
+        }
+
+        return $template;
+
+    }
+
+    public function get_template_styles() { 
+
+        global $wpdb;
+
+        $table_template = $this->table_prefix . 'wcnd_templates';
+
+        $template = $wpdb->get_results( 
+            $wpdb->prepare("SELECT *  FROM {$table_template} ") 
+         );
+
+        return $template;
+
+    }
+
     public function notification_messages() {
 
         global $wpdb;

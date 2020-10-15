@@ -36,6 +36,35 @@ Class WoocommerceNotificationDisplayValidateAjaxCall {
 
         add_action( 'wp_ajax_save_notification_wcnd', array( $this, 'validate_save_message' ) );
 
+        add_action( 'wp_ajax_save_template_settings_wcnd', array( $this, 'validate_template_styles' ) );
+
+    }
+
+    public function validate_template_styles() {
+
+        $nonce  = $_POST['nonce'];
+
+        if( ! wp_verify_nonce( $nonce, 'ncwd-nonce-ajax-security' ) )
+            die('Busted!');
+
+        $css_code = array(
+            'font_size'     => sanitize_text_field( $_POST['fontsize'] ),
+            'font_color'    => sanitize_text_field( $_POST['fontcolor'] ),
+            'bg_color'      => sanitize_text_field( $_POST['bgcolor'] ),
+            'btn_bgcolor'   => sanitize_text_field( $_POST['btnbgcolor'] )
+        );
+
+        $serialized_css = maybe_serialize( $css_code );
+        $template_id    = 1;
+
+        $template =  WNDD()->save_template_settings( $template_id, $serialized_css );
+
+        wp_send_json_success(
+            wp_json_encode( $template )
+        );
+
+        die();
+
     }
 
     public function remove_message_row() {
