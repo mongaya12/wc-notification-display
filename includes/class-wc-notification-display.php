@@ -81,12 +81,12 @@ Class WoocommerceNotificationDisplaySetup {
         global $pagenow;
         
         if( ( $pagenow == 'admin.php' ) && $_GET['page'] == 'wcnd-dashboard'  ) {
-            wp_register_style('jquery-ui', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css');
+
+            wp_enqueue_style( 'jquery-ui', WCND_URL__PATH . 'assets/libs/jqueryui/jquery-ui.css',  array(), false );
             wp_enqueue_style( 'wcnd-fontawesome-icons' , WCND_URL__PATH . 'assets/libs/fontawesome/css/all.css',  array(), false );
             wp_enqueue_style( 'wcnd-admin-dashboard' , WCND_URL__PATH . 'assets/css/wcnd-admin-dashboard.css',  array(), false );
     
             wp_enqueue_style( 'wp-color-picker' );
-            wp_enqueue_style('jquery-ui');
 
             wp_enqueue_script('jquery-ui-datepicker');
             
@@ -95,6 +95,7 @@ Class WoocommerceNotificationDisplaySetup {
 
             wp_enqueue_script( 'wcnd-admin-scripts' , WCND_URL__PATH . 'assets/js/wcnd-admin-scripts.js',  array(), false, true);
             wp_localize_script( 'wcnd-admin-scripts', 'wcnd_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce('ajax-nonce') ) );
+        
         }
 
     }

@@ -28,3 +28,16 @@
     top: 50%;
     transform: translate(0, -50%);
 }
+
+@media(max-width:480px) {
+    .wcnd-box-template.wcnd-template-1 p{
+        width:100%;
+    }
+    .wcnd_anchor_template {
+        position: relative;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+    }
+}

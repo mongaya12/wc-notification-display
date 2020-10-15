@@ -167,10 +167,10 @@
                         minDate:0,
                         dateFormat: "mm-dd-yy",
                         yearRange: "-100:+20",
-                        onClose: function() {
+                        onClose: function( date ) {
 
-                            var date = new Date(startDate.val()),
-                                selectedDate = new Date(date),
+                            var dates = new Date( date ),
+                                selectedDate = new Date(dates),
                                 msecsInADay = 86400000,
                                 selectedEndDate = new Date(selectedDate.getTime() + msecsInADay);
                             
@@ -178,9 +178,12 @@
                                     "change",
                                     { minDate: selectedEndDate }
                             );
-                        }
-                    }); 
 
+                        }
+
+                    });
+
+                    
                     $('.wcnd-end-date').datepicker({
                         changeYear: true,
                         changeMonth: true,
@@ -304,6 +307,7 @@
                             if( result.data.error == false ) {
                            
                                 $('#wpbody-content').append(result.data.content);
+                                scope.dateUiMessage();
                            
                             }else{
                                 
