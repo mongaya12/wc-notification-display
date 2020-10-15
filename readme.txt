@@ -1,5 +1,6 @@
 === Wocommerce Notification Display ===
-Contributor: Paul Mongaya
+Contributors: mongaya12
+Donate Link:
 Tags: woocommerce, wc, custom message notification, message notification template, css
 Requires at least: 4.9
 Tested up to: 5.5
@@ -24,12 +25,17 @@ WooCommerce Custom Notification Display will help you boost your sales by inform
 - Hook to Woocommerce pages
 - Date publication 
 
-= 1.0 =
-* Initial Release
-
 == Frequently Asked Questions ==
 
 = Will I able to edit the template on front-end by using css code? =
 
 Yes, 100% you can do your own styling.
 
+= 1.0 =
+* Initial Release
+
+== Screenshots ==
+
+== Changelog ==
+
+== Upgrade Notice ==
