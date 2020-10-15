@@ -52,6 +52,24 @@ Class WoocommerceNotificationDisplaySetup {
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts_styles' ) );
         add_action( 'admin_menu', array( $this, 'create_subpage_under_woocommerce' ), 99 );
+        add_filter( 'plugin_action_links', array( $this, 'wcnd_plugin_setting_links' ), 10, 2);
+
+    }
+
+    public function wcnd_plugin_setting_links( $links, $file ) {
+
+        static $this_plugin;
+
+        if (!$this_plugin) {
+            $this_plugin = plugin_basename(WCND_DIR__PATH . '/wc-notification-display.php');
+        }
+
+        if ($file == $this_plugin) {
+            $settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=wcnd-dashboard">Settings</a>';
+            array_unshift($links, $settings_link);
+        }
+        
+        return $links;
 
     }
 
